@@ -31,7 +31,6 @@ jobs:
     - name: Lint Code
       run: echo "Project Linting"
       
-
     - name: Run Unit Tests
       run: echo "UNIT TESTING" 
 
@@ -47,4 +46,6 @@ jobs:
 
     - name: Deploy to Production
       if: github.ref == 'refs/heads/main' && success()  # Only deploy to production if staging is successful
-      run: echo "Deploying to production environment"
+      run: |
+        echo "Deploying to production environment"
+        vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
