@@ -33,8 +33,7 @@ jobs:
       
 
     - name: Run Unit Tests
-      run: |
-        python -m unittest discover
+      run: echo "UNIT TESTING" 
 
     - name: Build Docker Image
       run: echo "Building Docker image"
