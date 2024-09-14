@@ -1,20 +1,41 @@
-name: Simple CI/CD Pipeline
+name: CI/CD Pipeline
 
 on:
+  workflow_dispatch:  # Allows you to trigger the workflow manually
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Trigger pipeline on push to the main branch
 
 jobs:
-  echo-job:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout Code
+      run: echo "Checking out code"
 
-      - name: Echo Hello
-        run: echo "Hello, World!"
+    - name: Set Up Python
+      run: echo "Setting up Python"
 
-      - name: Echo Current Branch
-        run: echo "Current branch: ${{ github.ref }}"
+    - name: Install Dependencies
+      run: echo "Installing dependencies"
+
+    - name: Lint Code
+      run: echo "Linting code"
+
+    - name: Run Unit Tests
+      run: echo "Running unit tests"
+
+    - name: Build Docker Image
+      run: echo "Building Docker image"
+
+    - name: Deploy to Development
+      run: echo "Deploying to development environment"
+
+    - name: Deploy to Staging
+      if: github.ref == 'refs/heads/main' && success()  # Only deploy to staging if tests pass
+      run: echo "Deploying to staging environment"
+
+    - name: Deploy to Production
+      if: github.ref == 'refs/heads/main' && success()  # Only deploy to production if staging is successful
+      run: echo "Deploying to production environment"
