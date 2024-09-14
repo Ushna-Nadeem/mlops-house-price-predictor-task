@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor</title>
+</head>
+<body>
+    <h1>House Price Prediction</h1>
+    <form id="prediction-form">
+        <label for="bedrooms">Bedrooms:</label>
+        <input type="number" id="bedrooms" name="BEDROOMS" required><br>
+        <label for="bathrooms">Bathrooms:</label>
+        <input type="number" id="bathrooms" name="BATHROOMS" required><br>
+        <label for="garage">Garage:</label>
+        <input type="number" id="garage" name="GARAGE" required><br>
+        <label for="land_area">Land Area (m²):</label>
+        <input type="number" id="land_area" name="LAND_AREA" required><br>
+        <label for="floor_area">Floor Area (m²):</label>
+        <input type="number" id="floor_area" name="FLOOR_AREA" required><br>
+        <label for="build_year">Year Built:</label>
+        <input type="number" id="build_year" name="BUILD_YEAR" required><br>
+        <label for="cbd_dist">Distance to CBD (km):</label>
+        <input type="number" id="cbd_dist" name="CBD_DIST" required><br>
+        <button type="button" onclick="submitForm()">Predict</button>
+    </form>
+    <h2>Prediction Result:</h2>
+    <p id="result"></p>
+
+    <script>
+        async function submitForm() {
+            const form = document.getElementById('prediction-form');
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => { data[key] = value; });
+
+            try {
+                const response = await fetch('http://localhost:5000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                if (result.error) {
+                    document.getElementById('result').innerText = 'Error: ' + result.error;
+                } else {
+                    document.getElementById('result').innerText = 'Predicted Price: ' + result.price;
+                }
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
