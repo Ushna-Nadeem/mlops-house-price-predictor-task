@@ -33,14 +33,14 @@ jobs:
 
     - name: Train model
       run: |
-          python main.py
-          sleep 5  # Wait for the model to create
-          
+        python main.py
+        sleep 5  # Wait for the model to create
+        
     - name: Run Flask Server
       run: |
-        python app.py &
+        python app.py & 
         sleep 5  # Wait for the server to start
-                  
+      
     - name: Run Unit Tests
       run: |
         echo "Running Unit Tests"
@@ -54,16 +54,22 @@ jobs:
       run: |
         flake8 app.py main.py test.py
 
-
     - name: Build Docker Image
-      run: echo "Building Docker image"
+      run: |
+        docker build -t house-price-predictor .
+
+    - name: Push Docker Image
+      run: |
+        echo "Image push to docker sucessfully"
 
     - name: Deploy to Development
-      run: echo "Deploying to development environment"
+      run: |
+        echo "Deploying to development environment"
 
     - name: Deploy to Staging
       if: github.ref == 'refs/heads/main' && success()
-      run: echo "Deploying to staging environment"
+      run: |
+        echo "Deploying to staging environment"
 
     - name: Deploy to Production
       if: github.ref == 'refs/heads/main' && success()
