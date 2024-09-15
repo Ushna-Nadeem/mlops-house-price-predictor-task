@@ -25,7 +25,7 @@ def save_model(model, filename):
         pickle.dump(model, file)
 
 def main():
-    data = load_data('data/house_prices.csv')
+    data = load_data('modeldata/house_prices.csv')
     X, y = preprocess_data(data)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     model = train_model(X_train, y_train)
