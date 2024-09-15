@@ -30,8 +30,6 @@ jobs:
     - name: Lint Code
       run: |
         echo "Linting Code"
-        # Optionally, add linter command (e.g., flake8, pylint)
-        flake8 .
 
     - name: Start Flask Server
       run: |
