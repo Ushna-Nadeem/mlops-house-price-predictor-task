@@ -45,7 +45,15 @@ jobs:
       run: |
         echo "Running Unit Tests"
         python test.py
+        
+    - name: Run flake8
+      run: |
+          flake8 app.py main.py test.py
 
+    - name: Run black
+      run: |
+          black --check app.py main.py test.py
+    
     - name: Lint Code
       run: echo "Project Linting"
 
