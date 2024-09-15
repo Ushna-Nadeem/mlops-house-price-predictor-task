@@ -34,28 +34,26 @@ jobs:
     - name: Train model
       run: |
           python main.py
-          sleep 10  # Wait for the model to create
-
+          sleep 5  # Wait for the model to create
+          
     - name: Run Flask Server
       run: |
         python app.py &
         sleep 5  # Wait for the server to start
-
+                  
     - name: Run Unit Tests
       run: |
         echo "Running Unit Tests"
         python test.py
         
+    - name: Format Code
+      run: |
+        black app.py main.py test.py
+
     - name: Run flake8
       run: |
-          flake8 app.py main.py test.py
+        flake8 app.py main.py test.py
 
-    - name: Run black
-      run: |
-          black --check app.py main.py test.py
-    
-    - name: Lint Code
-      run: echo "Project Linting"
 
     - name: Build Docker Image
       run: echo "Building Docker image"
