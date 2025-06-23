@@ -1,8 +1,6 @@
-# 🏠 MLOps House Price Predictor
+# 🏠 House Price Predictor – MLOps Task
 
-This project demonstrates a complete MLOps workflow for predicting **house prices** based on input features using a machine learning model, with deployment and version control integrations.
-
-🔗 **GitHub Repository:** [mlops-house-price-predictor-task](https://github.com/Ushna-Nadeem/mlops-house-price-predictor-task)
+A complete machine learning pipeline for predicting house prices, built with **Flask**, integrated with **Docker**, and structured for **MLOps** workflows including automated formatting, linting, and deployment support.
 
 ---
 
@@ -10,11 +8,12 @@ This project demonstrates a complete MLOps workflow for predicting **house price
 
 This project includes:
 
-* **📊 Model Training:** A regression model trained to predict house prices
-* **⚙️ Flask API:** Backend service that handles prediction requests
-* **🖥️ Frontend Interface:** User-friendly form to input house details
-* **📁 DVC Integration:** Data versioning and experiment tracking using DVC
-* **🐳 Docker Support:** Containerized setup using Docker and Docker Compose
+* 📊 **Model Training:** Trains a regression model on housing data (`house_prices.csv`)
+* ⚙️ **Flask API:** Serves real-time predictions via HTTP POST requests
+* 🌐 **Frontend:** Simple HTML form for user input
+* 🐳 **Docker Support:** Containerized for consistent deployment
+* ✅ **CI/CD Ready:** Includes GitHub Actions workflow
+* 🧪 **Testing & Linting:** Automated with `pytest`, `flake8`, and `black`
 
 ---
 
@@ -22,66 +21,95 @@ This project includes:
 
 ```
 mlops-house-price-predictor-task/
-├── app.py              # Flask API for predictions
-├── model.py            # Model training and saving
-├── templates/
-│   └── index.html      # Frontend form
-├── data/
-│   └── housing.csv     # Dataset (tracked with DVC)
-├── requirements.txt    # Python dependencies
-├── Dockerfile          # Docker image config
-├── docker-compose.yml  # Docker Compose setup
-└── .gitignore / .dvc / README.md
+├── .github/workflows/     # GitHub Actions CI/CD configs
+├── modeldata/             # Contains house_prices.csv
+├── app.py                 # Flask backend for serving predictions
+├── main.py                # Model training and loading
+├── test.py                # Unit tests
+├── index.html             # Frontend form
+├── Dockerfile             # Docker image definition
+├── vercel.json            # Vercel deployment config
+├── requirements.txt       # Project dependencies
+├── pyproject.toml         # Formatter config (black)
+├── .flake8                # Linter config
+├── .gitignore             # Git ignore rules
+├── .dockerignore          # Docker ignore rules
+└── README.md              # Project documentation
 ```
 
 ---
 
-## 🚀 How to Use
+## 🚀 How to Run Locally
 
-### 🔧 Local Setup
+### 1. Clone the Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/Ushna-Nadeem/mlops-house-price-predictor-task.git
 cd mlops-house-price-predictor-task
+```
 
-# Install dependencies
+### 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-# Run the Flask app
+### 3. Run the Application
+
+```bash
 python app.py
 ```
 
-Open your browser at `http://localhost:5000` and enter house details to get a predicted price.
+Visit **`http://localhost:5000`** in your browser.
 
 ---
 
-### 🐳 Docker Usage
+## 🐳 Run with Docker
 
 ```bash
-# Build and run using Docker Compose
-docker-compose up --build
+# Build the Docker image
+docker build -t house-price-predictor .
+
+# Run the container
+docker run -p 5000:5000 house-price-predictor
 ```
 
 ---
 
-### 📂 DVC Workflow
+## 🧪 Testing & Linting
 
 ```bash
-# Pull the dataset tracked with DVC
-dvc pull
+# Run tests
+pytest test.py
 
-# Track new data or changes
-dvc add data/housing.csv
-git add data/housing.csv.dvc
-git commit -m "Track dataset with DVC"
+# Linting
+flake8 .
+
+# Format code
+black .
 ```
+
+---
+
+## 🌐 Deployment
+
+* **Vercel:** Deployment config via `vercel.json`
+* **CI/CD:** GitHub Actions set up for auto-deployment and formatting checks
+
+---
+
+## 🧠 How It Works
+
+* The user enters house features through a web form
+* The form sends a request to the Flask API
+* The model (trained in `main.py`) predicts the price
+* Result is displayed instantly on the web page
 
 ---
 
 ## ✅ Features
 
-* Predict house prices based on key features
-* ML workflow with data versioning (DVC)
-* Clean UI with real-time prediction
-* Dockerized for consistent deployment
+* Simple and responsive UI
+* Dockerized for portability
+* Clean code practices with black, flake8
+* Automated testing and GitHub Actions support
